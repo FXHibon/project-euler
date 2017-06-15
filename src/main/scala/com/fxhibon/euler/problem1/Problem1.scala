@@ -18,7 +18,7 @@ object Problem1 extends App with LazyLogging {
 
   Source(0 to 999)
     .filter { e => (e % 3 == 0) || (e % 5 == 0) }
-      .watchTermination()(Keep.right)
+    .watchTermination()(Keep.right)
     .runFold(0)(_ + _)
     .map { res => logger.info(s"Sum of all the multiples of 3 or 5 below 1000 is $res") }
     .onComplete { _ =>
