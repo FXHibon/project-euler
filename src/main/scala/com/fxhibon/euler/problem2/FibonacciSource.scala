@@ -15,27 +15,26 @@ class FibonacciSource(limit: Int = Int.MaxValue, max: Int = Int.MaxValue) extend
 
   private val out = Outlet[Int]("FibonacciSource.out")
   override val shape = SourceShape(out)
-  private val buffer = mutable.Queue.empty[Int]
 
   override def createLogic(inheritedAttributes: Attributes): GraphStageLogic = {
+
     new GraphStageLogic(shape) {
 
-      setHandler(out, new OutHandler {
-        override def onPull(): Unit = if (buffer.nonEmpty) push(out, buffer.dequeue())
-      })
-      preStart()
       private var count = 0
-      private var prevs = (1, 1)
-      while (count < limit && prevs._2 < max) {
-        count += 1
-        if (isAvailable(out)) {
-          push(out, prevs._2)
-        } else {
-          buffer.enqueue(prevs._2)
+      private var prevs = (0, 1)
+
+      setHandler(out, new OutHandler {
+        override def onPull(): Unit = {
+          prevs = (prevs._2, prevs._1 + prevs._2)
+          count += 1
+          if (count >= limit || prevs._2 >= max) {
+            completeStage()
+          } else {
+            push(out, prevs._2)
+          }
         }
-        prevs = (prevs._2, prevs._1 + prevs._2)
-      }
-      completeStage()
+      })
     }
+
   }
 }

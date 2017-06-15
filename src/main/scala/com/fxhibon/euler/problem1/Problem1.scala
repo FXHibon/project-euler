@@ -2,7 +2,7 @@ package com.fxhibon.euler.problem1
 
 import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
-import akka.stream.scaladsl.Source
+import akka.stream.scaladsl.{Keep, Source}
 import com.typesafe.scalalogging.LazyLogging
 
 /**
@@ -18,6 +18,10 @@ object Problem1 extends App with LazyLogging {
 
   Source(0 to 999)
     .filter { e => (e % 3 == 0) || (e % 5 == 0) }
+      .watchTermination()(Keep.right)
     .runFold(0)(_ + _)
     .map { res => logger.info(s"Sum of all the multiples of 3 or 5 below 1000 is $res") }
+    .onComplete { _ =>
+      system.terminate()
+    }
 }
