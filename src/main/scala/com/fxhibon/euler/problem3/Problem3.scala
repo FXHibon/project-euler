@@ -6,7 +6,9 @@ import akka.stream.ActorMaterializer
 import akka.stream.scaladsl.{Keep, RunnableGraph, Sink, Source}
 import com.typesafe.scalalogging.LazyLogging
 
+import scala.collection.mutable
 import scala.concurrent.Future
+import scala.util.Success
 
 /**
   * Created by francois-xavierhibon on 15/06/2017.
@@ -21,9 +23,13 @@ object Problem3 extends App with LazyLogging {
 
   val n = 600851475143L
 
-  Source.fromGraph(new PrimeSource(100))
+  Source.fromGraph(new PrimeSource(147))
     .watchTermination()(Keep.right)
-    .runForeach { prime => logger.info(prime.toString) }
+    .runFold(mutable.Queue.empty[Long])(_ :+ _)
+    .map { primes =>
+      logger.info(s"${primes.length} prime numbers generated. Applying algorithm ...")
+      primes.fold
+    }
     .onComplete { _ =>
       system.terminate()
     }
