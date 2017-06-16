@@ -28,7 +28,7 @@ object Problem3 extends App with LazyLogging {
     .runFold(mutable.Queue.empty[Long])(_ :+ _)
     .map { primes =>
       logger.info(s"${primes.length} prime numbers generated. Applying algorithm ...")
-      primes.fold
+      // @todo rec function
     }
     .onComplete { _ =>
       system.terminate()
