@@ -2,8 +2,10 @@ package com.fxhibon.euler.problem3
 
 import akka.stream.{Attributes, Outlet, SourceShape}
 import akka.stream.stage.{GraphStage, GraphStageLogic, OutHandler}
+import com.typesafe.scalalogging.LazyLogging
 
 import scala.collection.mutable
+import scala.collection.mutable.ListBuffer
 
 /**
   * Created by francois-xavierhibon on 16/06/2017.
@@ -18,10 +20,11 @@ class PrimeSource(limit: Long = Long.MaxValue) extends GraphStage[SourceShape[Lo
   override val shape = SourceShape(out)
 
   override def createLogic(inheritedAttributes: Attributes): GraphStageLogic = {
-    new GraphStageLogic(shape) {
+    new GraphStageLogic(shape) with LazyLogging {
       var count = 0
-      var prevs = mutable.ListBuffer(1L)
+      var prevs = mutable.ListBuffer(2L)
       setHandler(out, new OutHandler {
+
         override def onPull(): Unit = {
           if (count >= limit) {
             completeStage()
@@ -31,7 +34,7 @@ class PrimeSource(limit: Long = Long.MaxValue) extends GraphStage[SourceShape[Lo
             var prime = false
             while (!prime) {
               // if one of prevs elems can divide candidate, then it's not prime and it should be inc
-              if (???) {
+              if (prevs.exists(candidate % _ == 0)) {
                 candidate += 1
               } else {
                 prime = true
