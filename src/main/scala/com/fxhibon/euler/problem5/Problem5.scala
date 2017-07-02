@@ -1,4 +1,4 @@
-package com.fxhibon.euler
+package com.fxhibon.euler.problem5
 
 import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
