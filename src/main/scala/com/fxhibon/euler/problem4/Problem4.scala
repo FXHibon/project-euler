@@ -35,6 +35,4 @@ object Problem4 extends App with LazyLogging {
   val res = pals.max
 
   logger.info(s"Largest palyndrom is ${res.op1} x ${res.op2} = ${res.res}")
-
-
 }
