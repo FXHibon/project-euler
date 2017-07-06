@@ -1,11 +1,20 @@
 package com.fxhibon.euler.problem8
 
+import akka.actor.ActorSystem
+import akka.stream.ActorMaterializer
+import akka.stream.scaladsl.{Keep, Sink, Source}
+import com.typesafe.scalalogging.LazyLogging
+
 /**
   * Created by fx on 02/07/2017.
   *
   * @see https://projecteuler.net/problem=8
   */
-object Problem8 {
+object Problem8 extends App with LazyLogging {
+
+  implicit val system = ActorSystem()
+  implicit val materializer = ActorMaterializer()
+  implicit val executionContext = materializer.executionContext
 
   val rawInput =
     """73167176531330624919225119674426574742355349194934
@@ -27,7 +36,23 @@ object Problem8 {
       |07198403850962455444362981230987879927244284909188
       |84580156166097919133875499200524063689912560717606
       |05886116467109405077541002256983155200055935729725
-      |71636269561882670428252483600823257530420752963450""".stripMargin
+      |71636269561882670428252483600823257530420752963450""".stripMargin.filter(_ >= ' ')
 
+  val length = 13
+
+  Source.fromGraph(new GroupingSource(rawInput, length))
+    .map { e =>
+      val longDigits = e.map(_.asDigit).map(_.toLong)
+      val product = longDigits.product
+      logger.info(s"from $e, product of $longDigits is $product")
+      product
+    }
+    .watchTermination()(Keep.right)
+    .runWith(Sink.seq)
+    .map(_.max)
+    .map { res => logger.info(s"The value of the product of the thirteen adjacent digits in the 1000-digit number that have the greatest product is $res") }
+    .onComplete { _ =>
+      system.terminate()
+    }
 
 }
