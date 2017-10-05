@@ -1,12 +1,12 @@
 package com.fxhibon.euler.problem7
 
-import akka.stream.{Attributes, Outlet, SourceShape}
-import akka.stream.stage.{GraphStage, GraphStageLogic, OutHandler}
+import akka.stream.{ Attributes, Outlet, SourceShape }
+import akka.stream.stage.{ GraphStage, GraphStageLogic, OutHandler }
 
 /**
-  * Created by fx on 02/07/2017.
-  * Emit prime number while downstream ask for it
-  */
+ * Created by fx on 02/07/2017.
+ * Emit prime number while downstream ask for it
+ */
 class PrimeSource extends GraphStage[SourceShape[Long]] {
 
   val out = Outlet[Long]("Source.out")

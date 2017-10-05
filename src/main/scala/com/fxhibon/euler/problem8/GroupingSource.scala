@@ -1,11 +1,11 @@
 package com.fxhibon.euler.problem8
 
-import akka.stream.{Attributes, Outlet, SourceShape}
-import akka.stream.stage.{GraphStage, GraphStageLogic, OutHandler}
+import akka.stream.{ Attributes, Outlet, SourceShape }
+import akka.stream.stage.{ GraphStage, GraphStageLogic, OutHandler }
 
 /**
-  * Created by fx on 06/07/2017.
-  */
+ * Created by fx on 06/07/2017.
+ */
 class GroupingSource(rawData: String, group: Int) extends GraphStage[SourceShape[String]] {
 
   val out = Outlet[String]("Source.out")

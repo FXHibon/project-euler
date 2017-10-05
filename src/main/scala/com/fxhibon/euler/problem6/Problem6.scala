@@ -6,10 +6,10 @@ import akka.stream.scaladsl.Source
 import com.typesafe.scalalogging.LazyLogging
 
 /**
-  * Created by fx on 19/06/2017.
-  *
-  * @see https://projecteuler.net/problem=6
-  */
+ * Created by fx on 19/06/2017.
+ *
+ * @see https://projecteuler.net/problem=6
+ */
 object Problem6 extends App with LazyLogging {
 
   implicit val system = ActorSystem()

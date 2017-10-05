@@ -2,14 +2,14 @@ package com.fxhibon.euler.problem7
 
 import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
-import akka.stream.scaladsl.{Keep, Sink, Source}
+import akka.stream.scaladsl.{ Keep, Sink, Source }
 import com.typesafe.scalalogging.LazyLogging
 
 /**
-  * Created by fx on 02/07/2017.
-  *
-  * @see https://projecteuler.net/problem=7
-  */
+ * Created by fx on 02/07/2017.
+ *
+ * @see https://projecteuler.net/problem=7
+ */
 object Problem7 extends App with LazyLogging {
 
   implicit val system = ActorSystem()

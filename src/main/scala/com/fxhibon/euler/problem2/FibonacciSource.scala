@@ -1,16 +1,16 @@
 package com.fxhibon.euler.problem2
 
-import akka.stream.{Attributes, Outlet, SourceShape}
-import akka.stream.stage.{GraphStage, GraphStageLogic, OutHandler}
+import akka.stream.{ Attributes, Outlet, SourceShape }
+import akka.stream.stage.{ GraphStage, GraphStageLogic, OutHandler }
 
 import scala.collection.mutable
 
 /**
-  * Construct a source which emit fibonacci values, until [[limit]] is reached if defined
-  *
-  * @param limit Max count to reach before source stop emit data
-  * @param max   Stop the source as soon as it reaches [[max]] value
-  */
+ * Construct a source which emit fibonacci values, until [[limit]] is reached if defined
+ *
+ * @param limit Max count to reach before source stop emit data
+ * @param max   Stop the source as soon as it reaches [[max]] value
+ */
 class FibonacciSource(limit: Int = Int.MaxValue, max: Int = Int.MaxValue) extends GraphStage[SourceShape[Int]] {
 
   private val out = Outlet[Int]("FibonacciSource.out")
