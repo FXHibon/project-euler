@@ -8,8 +8,8 @@ import domain.Problem
  *
  * @see https://projecteuler.net/problem=1
  */
-class Problem1 extends Problem[Int] {
-  override val stream = Source(0 to 999)
+class Problem1(max: Int) extends Problem[Int] {
+  override val stream = Source(0 until max)
     .filter { e => (e % 3 == 0) || (e % 5 == 0) }
     .reduce(_ + _)
 }
