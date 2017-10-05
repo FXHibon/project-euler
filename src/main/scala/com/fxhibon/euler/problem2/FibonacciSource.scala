@@ -11,9 +11,9 @@ import scala.collection.mutable
  * @param limit Max count to reach before source stop emit data
  * @param max   Stop the source as soon as it reaches [[max]] value
  */
-class FibonacciSource(limit: Int = Int.MaxValue, max: Int = Int.MaxValue) extends GraphStage[SourceShape[Int]] {
+class FibonacciSource(limit: Int = Int.MaxValue, max: Int = Int.MaxValue) extends GraphStage[SourceShape[Long]] {
 
-  private val out = Outlet[Int]("FibonacciSource.out")
+  private val out = Outlet[Long]("FibonacciSource.out")
   override val shape = SourceShape(out)
 
   override def createLogic(inheritedAttributes: Attributes): GraphStageLogic = {
@@ -21,7 +21,7 @@ class FibonacciSource(limit: Int = Int.MaxValue, max: Int = Int.MaxValue) extend
     new GraphStageLogic(shape) {
 
       private var count = 0
-      private var prevs = (0, 1)
+      private var prevs = (0L, 1L)
 
       setHandler(out, new OutHandler {
         override def onPull(): Unit = {

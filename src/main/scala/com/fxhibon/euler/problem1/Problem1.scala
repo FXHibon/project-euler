@@ -12,5 +12,4 @@ class Problem1 extends Problem[Int] {
   override val stream = Source(0 to 999)
     .filter { e => (e % 3 == 0) || (e % 5 == 0) }
     .reduce(_ + _)
-    .watchTermination()(Keep.right)
 }
