@@ -13,8 +13,7 @@ import com.typesafe.scalalogging.LazyLogging
 object Problem6 extends App with LazyLogging {
 
   implicit val system = ActorSystem()
-  implicit val materializer = ActorMaterializer()
-  implicit val executionContext = materializer.executionContext
+  implicit val executionContext = system.dispatcher
 
   val source = Source(1 to 100)
 
