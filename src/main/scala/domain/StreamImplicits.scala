@@ -9,7 +9,6 @@ import scala.concurrent.ExecutionContextExecutor
  * DRY
  */
 trait StreamImplicits {
-  implicit val system = ActorSystem()
-  implicit val materializer = ActorMaterializer()
-  implicit val executionContext: ExecutionContextExecutor = materializer.executionContext
+  implicit val system: ActorSystem = ActorSystem()
+  implicit val executionContext: ExecutionContextExecutor = system.dispatcher
 }
